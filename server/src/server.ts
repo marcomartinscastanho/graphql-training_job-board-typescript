@@ -7,6 +7,7 @@ import { authMiddleware, handleLogin } from "./auth.js";
 import { resolvers } from "./resolvers.js";
 import { createCompanyLoader } from "./db/companies.js";
 import { getUser } from "./db/users.js";
+import { ResolverContext } from "./types.js";
 
 const PORT = 9000;
 
@@ -17,9 +18,9 @@ app.post("/login", handleLogin);
 
 const typeDefs = await readFile("./schema.graphql", "utf8");
 
-async function getContext({ req }) {
+async function getContext({ req }): Promise<ResolverContext> {
   const companyLoader = createCompanyLoader();
-  const context: any = { companyLoader };
+  const context: ResolverContext = { companyLoader };
   if (req.auth) {
     context.user = await getUser(req.auth.sub);
   }

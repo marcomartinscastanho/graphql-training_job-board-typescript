@@ -27,7 +27,7 @@ export const resolvers: Resolvers = {
       }
       return job;
     },
-    jobs: async (_root, { limit, offset }) => {
+    jobs: async (_root, { limit, offset }, context) => {
       const items = await getJobs(limit, offset);
       const totalCount = await countJobs();
       return { items, totalCount };
