@@ -9,8 +9,9 @@ import {
   getJobsByCompany,
   updateJob,
 } from "./db/jobs.js";
+import { Resolvers } from "./generated/schema.js";
 
-export const resolvers = {
+export const resolvers: Resolvers = {
   Query: {
     company: async (_root, { id }) => {
       const company = await getCompany(id);
