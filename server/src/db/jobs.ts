@@ -1,16 +1,16 @@
-import { connection } from './connection.js';
-import { generateId } from './ids.js';
-import { JobEntity } from './types.js';
+import { connection } from "./connection.js";
+import { generateId } from "./ids.js";
+import { JobEntity } from "./types.js";
 
-const getJobTable = () => connection.table<JobEntity>('job');
+const getJobTable = () => connection.table<JobEntity>("job");
 
 export async function countJobs() {
-  const { count } = await getJobTable().first().count('*', { as: 'count' });
+  const { count } = await getJobTable().first().count("*", { as: "count" });
   return count as number;
 }
 
 export async function getJobs(limit: number, offset: number) {
-  const query = getJobTable().select().orderBy('createdAt', 'desc');
+  const query = getJobTable().select().orderBy("createdAt", "desc");
   if (limit) {
     query.limit(limit);
   }
@@ -28,9 +28,13 @@ export async function getJob(id: string) {
   return await getJobTable().first().where({ id });
 }
 
-type CreateJobOptions = Pick<JobEntity, 'companyId' | 'title' | 'description'>;
+type CreateJobOptions = Pick<JobEntity, "companyId" | "title" | "description">;
 
-export async function createJob({ companyId, title, description }: CreateJobOptions) {
+export async function createJob({
+  companyId,
+  title,
+  description,
+}: CreateJobOptions) {
   const job: JobEntity = {
     id: generateId(),
     companyId,
@@ -51,9 +55,17 @@ export async function deleteJob(id: string, companyId: string) {
   return job;
 }
 
-type UpdateJobOptions = Pick<JobEntity, 'id' | 'companyId' | 'title' | 'description'>;
+type UpdateJobOptions = Pick<
+  JobEntity,
+  "id" | "companyId" | "title" | "description"
+>;
 
-export async function updateJob({ id, companyId, title, description }: UpdateJobOptions) {
+export async function updateJob({
+  id,
+  companyId,
+  title,
+  description,
+}: UpdateJobOptions) {
   const job = await getJobTable().first().where({ id, companyId });
   if (!job) {
     return null;

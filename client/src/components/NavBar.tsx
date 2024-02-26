@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { User, logout } from '../lib/auth';
+import { Link } from "react-router-dom";
+import { User, logout } from "../lib/auth";
 
 interface NavBarProps {
   user: User | null;
@@ -22,9 +22,7 @@ function NavBar({ user, onLogout }: NavBarProps) {
       </div>
       {loggedIn ? (
         <div className="navbar-end">
-          <span className="navbar-item has-text-grey">
-            {user.email}
-          </span>
+          <span className="navbar-item has-text-grey">{user.email}</span>
           <Link className="navbar-item" to="/jobs/new">
             Post Job
           </Link>
